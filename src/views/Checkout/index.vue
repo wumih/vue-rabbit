@@ -101,7 +101,7 @@ const createOrder = async () => {
               <tr v-for="i in checkInfo.goods" :key="i.id">
                 <td>
                   <a href="javascript:;" class="info">
-                    <img :src="i.picture" alt="">
+                    <img v-img-lazy="i.picture" alt="">
                     <div class="right">
                       <p>{{ i.name }}</p>
                       <p>{{ i.attrsText }}</p>

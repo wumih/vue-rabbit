@@ -28,7 +28,7 @@ onMounted(() => getNewList())
         <!-- 使用动态路由链接到商品详情页 -->
         <RouterLink :to="`/detail/${item.id}`">
           <!-- 商品图片 -->
-          <img :src="item.picture" alt="" />
+          <img v-img-lazy="item.picture" alt="" />
           <!-- 商品名称 -->
           <p class="name">{{ item.name }}</p>
           <!-- 商品价格 -->

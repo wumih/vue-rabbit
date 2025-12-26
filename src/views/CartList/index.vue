@@ -42,7 +42,7 @@ const allCheck = (selected) => {
               </td>
               <td>
                 <div class="goods">
-                  <RouterLink to="/"><img :src="i.picture" alt="" /></RouterLink>
+                  <RouterLink to="/"><img v-img-lazy="i.picture" alt="" /></RouterLink>
                   <div>
                     <p class="name ellipsis">
                       {{ i.name }}

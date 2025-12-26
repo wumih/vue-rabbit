@@ -23,7 +23,7 @@ const { categoryData } = useCategory()
       <div class="home-banner">
         <el-carousel height="500px">
           <el-carousel-item v-for="item in bannerList" :key="item.id">
-            <img :src="item.imgUrl" alt="">
+            <img v-img-lazy="item.imgUrl" alt="">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -32,7 +32,7 @@ const { categoryData } = useCategory()
         <ul>
           <li v-for="i in categoryData.children" :key="i.id">
             <RouterLink :to="`/category/sub/${i.id}`">
-              <img :src="i.picture" />
+              <img v-img-lazy="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
           </li>

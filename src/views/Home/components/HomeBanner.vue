@@ -28,7 +28,7 @@ onMounted(() => getBanner())
       <!-- 遍历轮播图列表，为每个轮播项创建一个CarouselItem -->
       <el-carousel-item v-for="item in bannerList" :key="item.id">
         <!-- 轮播图图片 -->
-        <img :src="item.imgUrl" alt="">
+        <img v-img-lazy="item.imgUrl" alt="">
       </el-carousel-item>
     </el-carousel>
   </div>
