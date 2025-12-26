@@ -1,4 +1,9 @@
 <script setup>
+// 顶部通栏组件 - 页面最顶端深色细长条
+// 功能：展示辅助菜单
+// 逻辑：根据用户是否登录（检查Pinia里的Token）切换显示内容
+// - 未登录：显示"请先登录 | 免费注册"
+// - 已登录：显示"欢迎你，张三 | 退出登录"
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router'
 const userStore = useUserStore()

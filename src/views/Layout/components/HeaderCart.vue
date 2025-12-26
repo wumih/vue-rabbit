@@ -1,4 +1,10 @@
 <script setup>
+// 头部购物车组件 - 头部右侧的购物车图标
+// 功能：购物车预览功能
+// 作用：
+// - 显示购物车里的商品数量角标（Badge）
+// - 悬停交互：鼠标放上去弹出下拉框，显示最近加入的商品列表、总价和"去结算"按钮
+// 数据来源：从cartStore获取购物车商品列表和总数量
 import { useCartStore } from '@/stores/cartStore'
 const cartStore = useCartStore()
 

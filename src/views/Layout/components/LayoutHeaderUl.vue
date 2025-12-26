@@ -1,4 +1,8 @@
 <script setup>
+// 头部导航菜单组件 - 中间的分类导航菜单
+// 功能：循环展示一级分类列表（首页、居家、美食...）
+// 作用：将导航菜单渲染逻辑从LayoutHeader.vue中抽离，减少主组件代码臃肿
+// 数据来源：从categoryStore (Pinia) 获取分类列表数据
 import { useCategoryStore } from '@/stores/categoryStore'
 const categoryStore = useCategoryStore()
 </script>

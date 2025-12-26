@@ -1,4 +1,11 @@
 <script setup>
+// 吸顶导航组件 - 隐藏的彩蛋组件
+// 功能：页面滚动时的固定导航栏
+// 作用：当页面向下滚动，原来的LayoutHeader滚出屏幕后，
+//      继续往下拉到一定距离（78px）时，该组件从浏览器顶部滑出并固定
+//      方便用户在浏览长页面时不用滚回顶部就能切换分类或去购物车
+// 实现逻辑：使用@vueuse/core的useScroll监听滚动距离，当y > 78时显示，否则隐藏
+// 特点：LayoutHeader的简化版
 import LayoutHeaderUl from './LayoutHeaderUl.vue'
 // vueUse
 import { useScroll } from '@vueuse/core'

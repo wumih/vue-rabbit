@@ -1,4 +1,11 @@
 <script setup>
+// 头部核心区组件 - 导航栏下面大块白色区域
+// 功能：网站的门面，包含网站核心导航元素
+// 包含内容：
+// - Logo：点击回首页
+// - <LayoutHeaderUl />：中间的分类导航菜单
+// - 搜索框：输入关键词搜索商品
+// - <HeaderCart />：右侧的购物车图标
 import LayoutHeaderUl from './LayoutHeaderUl.vue'
 import HeaderCart from './HeaderCart.vue'
 </script>
