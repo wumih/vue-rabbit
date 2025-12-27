@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <!-- 商品项组件，使用RouterLink实现跳转 -->
-  <RouterLink to="/" class="goods-item">
+  <RouterLink :to="`/detail/${goods.id}`" class="goods-item">
     <!-- 商品图片，使用自定义指令v-img-lazy实现图片懒加载 -->
     <img v-img-lazy="goods.picture" alt="" />
     <!-- 商品名称，使用ellipsis类实现文本溢出省略 -->
