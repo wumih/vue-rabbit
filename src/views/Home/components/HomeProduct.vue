@@ -21,6 +21,30 @@ onMounted(() => getGoods())
 <template>
   <!-- 商品展示区域容器 -->
   <div class="home-product">
+    <!-- 骨架屏 -->
+    <div v-if="goodsProduct.length === 0" class="skeleton-product">
+      <!-- 模拟3个商品分类面板 -->
+      <div class="skeleton-panel" v-for="i in 3" :key="i">
+        <!-- 面板标题 -->
+        <div class="skeleton-panel-title"></div>
+        <div class="box">
+          <!-- 分类封面图 -->
+          <div class="cover skeleton-cover"></div>
+          <!-- 分类商品列表 -->
+          <ul class="goods-list">
+            <!-- 模拟8个商品项 -->
+            <li v-for="j in 8" :key="j">
+              <div class="skeleton-goods-item">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-name"></div>
+                <div class="skeleton-price"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- 正常内容 -->
     <!-- 遍历商品分类列表，为每个分类创建一个HomePanel面板 -->
     <HomePanel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">
       <div class="box">
@@ -146,4 +170,96 @@ onMounted(() => getGoods())
     }
   }
 }
+  /* 骨架屏样式 */
+  .skeleton-product {
+    background: #fff;
+    margin-top: 20px;
+    padding: 0 20px;
+    
+    .skeleton-panel {
+      margin-bottom: 20px;
+      
+      .skeleton-panel-title {
+        height: 50px;
+        background: #f2f2f2;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        animation: skeleton-loading 1.5s infinite;
+      }
+      
+      .box {
+        display: flex;
+        
+        .skeleton-cover {
+          width: 240px;
+          height: 610px;
+          margin-right: 10px;
+          background: #f2f2f2;
+          border-radius: 4px;
+          animation: skeleton-loading 1.5s infinite;
+        }
+        
+        .goods-list {
+          width: 990px;
+          display: flex;
+          flex-wrap: wrap;
+          
+          li {
+            width: 240px;
+            height: 300px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            
+            &:nth-last-child(-n + 4) {
+              margin-bottom: 0;
+            }
+            
+            &:nth-child(4n) {
+              margin-right: 0;
+            }
+            
+            .skeleton-goods-item {
+              width: 100%;
+              height: 100%;
+              padding: 10px;
+              box-sizing: border-box;
+              
+              .skeleton-image {
+                width: 220px;
+                height: 220px;
+                background: #f2f2f2;
+                border-radius: 4px;
+                margin-bottom: 10px;
+                animation: skeleton-loading 1.5s infinite;
+              }
+              
+              .skeleton-name {
+                width: 80%;
+                height: 22px;
+                background: #f2f2f2;
+                border-radius: 4px;
+                margin-bottom: 8px;
+                animation: skeleton-loading 1.5s infinite 0.2s;
+              }
+              
+              .skeleton-price {
+                width: 60%;
+                height: 22px;
+                background: #f2f2f2;
+                border-radius: 4px;
+                animation: skeleton-loading 1.5s infinite 0.4s;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  /* 骨架屏加载动画 */
+  @keyframes skeleton-loading {
+    0% { background: #f2f2f2; }
+    50% { background: #e6e6e6; }
+    100% { background: #f2f2f2; }
+  }
 </style>

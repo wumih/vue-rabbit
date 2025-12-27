@@ -21,8 +21,16 @@ onMounted(() => getHotList())
 <template>
   <!-- 使用HomePanel组件作为容器，传入标题和副标题 -->
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
+    <!-- 骨架屏 -->
+    <div v-if="hotList.length === 0" class="skeleton-goods-list">
+      <div class="skeleton-goods-item" v-for="i in 4" :key="i">
+        <div class="skeleton-image"></div>
+        <div class="skeleton-name"></div>
+        <div class="skeleton-desc"></div>
+      </div>
+    </div>
     <!-- 人气推荐商品列表 -->
-    <ul class="goods-list">
+    <ul v-else class="goods-list">
       <!-- 遍历人气推荐商品列表，为每个商品创建一个列表项 -->
       <li v-for="item in hotList" :key="item.id">
         <RouterLink to="/">
@@ -76,4 +84,105 @@ onMounted(() => getHotList())
     }
   }
 }
+
+// 骨架屏样式
+.skeleton-goods-list {
+  display: flex;
+  justify-content: space-between;
+  height: 426px;
+  
+  .skeleton-goods-item {
+    width: 306px;
+    height: 406px;
+    padding: 20px;
+    box-sizing: border-box;
+    
+    .skeleton-image {
+      width: 100%;
+      height: 306px;
+      background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: 8px;
+    }
+    
+    .skeleton-name {
+      width: 90%;
+      height: 22px;
+      margin-top: 12px;
+      background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: 4px;
+    }
+    
+    .skeleton-desc {
+      width: 80%;
+      height: 18px;
+      margin-top: 12px;
+      background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: 4px;
+    }
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+  /* 骨架屏样式 */
+  .skeleton-goods-list {
+    display: flex;
+    justify-content: space-between;
+    height: 406px;
+    
+    .skeleton-goods-item {
+      width: 306px;
+      height: 406px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      
+      .skeleton-image {
+        width: 266px;
+        height: 266px;
+        background: #f2f2f2;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        animation: skeleton-loading 1.5s infinite;
+      }
+      
+      .skeleton-name {
+        width: 90%;
+        height: 22px;
+        background: #f2f2f2;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        animation: skeleton-loading 1.5s infinite 0.2s;
+      }
+      
+      .skeleton-desc {
+        width: 80%;
+        height: 18px;
+        background: #f2f2f2;
+        border-radius: 4px;
+        animation: skeleton-loading 1.5s infinite 0.4s;
+      }
+    }
+  }
+  
+  /* 骨架屏加载动画 */
+  @keyframes skeleton-loading {
+    0% { background: #f2f2f2; }
+    50% { background: #e6e6e6; }
+    100% { background: #f2f2f2; }
+  }
 </style>

@@ -23,8 +23,12 @@ onMounted(() => getBanner())
 <template>
   <!-- 轮播图容器 -->
   <div class="home-banner">
-    <!-- 使用Element Plus的Carousel组件实现轮播效果 -->
-    <el-carousel height="500px">
+    <!-- 骨架屏 -->
+    <div v-if="bannerList.length === 0" class="skeleton-banner">
+      <div class="skeleton-carousel-item"></div>
+    </div>
+    <!-- 正常内容 -->
+    <el-carousel v-else height="500px">
       <!-- 遍历轮播图列表，为每个轮播项创建一个CarouselItem -->
       <el-carousel-item v-for="item in bannerList" :key="item.id">
         <!-- 轮播图图片 -->
@@ -52,4 +56,33 @@ onMounted(() => getBanner())
     height: 500px; // 图片高度
   }
 }
+  /* 骨架屏样式 */
+  .skeleton-banner {
+    width: 1240px;
+    height: 500px;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    animation: skeleton-loading 1.5s infinite;
+  }
+  
+  .skeleton-carousel-item {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+  }
+  
+  /* 骨架屏加载动画 */
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
 </style>
