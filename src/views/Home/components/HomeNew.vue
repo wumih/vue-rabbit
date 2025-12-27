@@ -3,14 +3,19 @@
 import HomePanel from './HomePanel.vue' // 面板容器组件
 import { findNewAPI } from '@/apis/home' // 新鲜好物数据API
 import { onMounted, ref } from 'vue' // Vue生命周期钩子和响应式API
+import { useGoodsStore } from '@/stores/goodsStore' // 导入商品数据仓库
 
 // 获取新鲜好物商品数据
 const newList = ref([]) // 定义响应式数据，用于存储新鲜好物商品列表
+
+// 获取商品数据仓库实例
+const goodsStore = useGoodsStore()
 
 // 获取新鲜好物商品数据的异步函数
 const getNewList = async () => {
   const res = await findNewAPI() // 调用API获取新鲜好物数据
   newList.value = res.result // 将返回结果赋值给响应式数据
+  goodsStore.collectGoods(res.result) // 收集商品数据用于搜索
 }
 
 // 在组件挂载时调用获取新鲜好物数据的函数

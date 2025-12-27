@@ -3,14 +3,19 @@
 import HomePanel from './HomePanel.vue' // 面板容器组件
 import { getHotAPI } from '@/apis/home' // 人气推荐数据API
 import { onMounted, ref } from 'vue' // Vue生命周期钩子和响应式API
+import { useGoodsStore } from '@/stores/goodsStore' // 导入商品数据仓库
 
 // 定义响应式数据，用于存储人气推荐商品列表
 const hotList = ref([])
+
+// 获取商品数据仓库实例
+const goodsStore = useGoodsStore()
 
 // 获取人气推荐商品数据的异步函数
 const getHotList = async () => {
   const res = await getHotAPI() // 调用API获取人气推荐数据
   hotList.value = res.result // 将返回结果赋值给响应式数据
+  goodsStore.collectGoods(res.result) // 收集商品数据用于搜索
 }
 
 // 在组件挂载时调用获取人气推荐数据的函数

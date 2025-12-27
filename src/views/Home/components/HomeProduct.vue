@@ -4,6 +4,10 @@ import HomePanel from './HomePanel.vue' // 面板容器组件
 import { getGoodsAPI } from '@/apis/home' // 商品数据API
 import { onMounted, ref } from 'vue' // Vue生命周期钩子和响应式API
 import GoodsItem from './GoodsItem.vue' // 商品项组件
+import { useGoodsStore } from '@/stores/goodsStore' // 导入商品数据仓库
+
+// 获取商品数据仓库
+const goodsStore = useGoodsStore()
 
 // 获取商品分类及商品列表数据
 const goodsProduct = ref([]) // 定义响应式数据，用于存储商品分类及商品列表
@@ -12,6 +16,12 @@ const goodsProduct = ref([]) // 定义响应式数据，用于存储商品分类
 const getGoods = async () => {
   const res = await getGoodsAPI() // 调用API获取商品数据
   goodsProduct.value = res.result // 将返回结果赋值给响应式数据
+  // 收集商品数据到仓库（处理分类下的嵌套商品列表）
+  res.result.forEach(cate => {
+    if (cate.goods && Array.isArray(cate.goods)) {
+      goodsStore.collectGoods(cate.goods)
+    }
+  })
 }
 
 // 在组件挂载时调用获取商品数据的函数

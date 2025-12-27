@@ -8,6 +8,23 @@
 // - <HeaderCart />：右侧的购物车图标
 import LayoutHeaderUl from './LayoutHeaderUl.vue'
 import HeaderCart from './HeaderCart.vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+// 搜索输入框的值
+const searchInput = ref('')
+// 获取路由实例
+const router = useRouter()
+
+// 处理搜索事件
+const handleSearch = () => {
+  if (searchInput.value.trim()) {
+    router.push({
+      path: '/search',
+      query: { keyword: searchInput.value.trim() }
+    })
+  }
+}
 </script>
 
 <template>
@@ -19,8 +36,13 @@ import HeaderCart from './HeaderCart.vue'
 
       <LayoutHeaderUl />
       <div class="search">
-        <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜一搜">
+        <i class="iconfont icon-search" @click="handleSearch"></i>
+        <input 
+          type="text" 
+          placeholder="搜一搜" 
+          v-model="searchInput"
+          @keyup.enter="handleSearch"
+        >
       </div>
       <!-- 头部购物车 -->
       <HeaderCart />
