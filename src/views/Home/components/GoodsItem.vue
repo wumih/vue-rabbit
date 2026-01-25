@@ -3,7 +3,7 @@
 // 注意：tppe是拼写错误，应该是type
 const props = defineProps({
   goods: {
-    tppe: Object, // 商品数据对象
+    type: Object, // 商品数据对象
     default: () => { } // 默认值为空对象
   }
 })

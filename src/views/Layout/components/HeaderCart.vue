@@ -13,12 +13,12 @@ const cartStore = useCartStore()
 <template>
   <div class="cart">
     <a class="curr" href="javascript:;">
-      <i class="iconfont icon-cart"></i><em>{{ cartStore.cartList.length }}</em>
-    </a>
+        <i class="iconfont icon-cart"></i><em>{{ cartStore.allCount }}</em>
+      </a>
     <div class="layer">
       <div class="list">
 
-        <div class="item" v-for="i in cartStore.cartList" :key="i">
+        <div class="item" v-for="i in cartStore.cartList" :key="i.skuId">
           <RouterLink to="">
             <img :src="i.picture" alt="" />
             <div class="center">

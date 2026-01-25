@@ -14,6 +14,10 @@ const singleCheck = (i, selected) => {
 const allCheck = (selected) => {
   cartStore.allCheck(selected)
 }
+
+const delCart = (item) => {
+  cartStore.delCart(item.skuId)
+}
 </script>
 
 <template>
