@@ -39,5 +39,9 @@ export default defineConfig({
         `,
       }
     }
+  },
+  server: {
+    port: 3000,  // 设置开发服务器端口为 3000
+    open: true   // 自动打开浏览器
   }
 })

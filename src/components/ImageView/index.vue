@@ -3,14 +3,14 @@ import { ref, watch } from 'vue'
 import { useMouseInElement } from '@vueuse/core'
 
 // 图片列表
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
-]
-
+// ✅ 通过 props 接收父组件传递的图片列表
+defineProps({
+  imageList: {
+    type: Array,
+    default: () => []
+  }
+})
+//作用：记录当前选中的是第几张图（默认为第0张）。当鼠标移入底部小图时，更新这个索引，从而切换中间显示的大图。
 // 1.小图切换大图显示
 const activeIndex = ref(0)
 
@@ -19,6 +19,7 @@ const enterhandler = (i) => {
 }
 
 // 2. 获取鼠标相对位置
+//作用：这是一个 VueUse 库的工具函数。它绑定了中间的大图容器（target），并实时返回鼠标相对于该容器左上角的坐标 (elementX, elementY)，以及鼠标是否离开了容器 (isOutside)。
 const target = ref(null)
 const { elementX, elementY, isOutside } = useMouseInElement(target)
 
@@ -28,13 +29,17 @@ const top = ref(0)
 
 const positionX = ref(0)
 const positionY = ref(0)
+//负责计算“遮罩层”的位置和“放大图”的位置。
 watch([elementX, elementY, isOutside], () => {
 
   // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑
+  // 1. 如果鼠标在外面，就不计算了，节省性能
   if (isOutside.value) return
 
   // 有效范围内控制滑块距离
   // 横向
+  // 2. 计算遮罩层(layer)的位置
+  // 逻辑：希望鼠标始终位于遮罩层中心。遮罩层宽200px，所以左上角坐标 = 鼠标坐标 - 100
   if (elementX.value > 100 && elementX.value < 300) {
     left.value = elementX.value - 100
   }
@@ -43,14 +48,18 @@ watch([elementX, elementY, isOutside], () => {
     top.value = elementY.value - 100
   }
 
-  // 处理边界
+// 3. 边界处理（防止遮罩层移出图片）
+  // 如果鼠标太靠左（<100），遮罩层就死死定在0
+  // 如果鼠标太靠右（>300），遮罩层就死死定在200（因为大图宽400-遮罩宽200=剩余200）
   if (elementX.value > 300) { left.value = 200 }
   if (elementX.value < 100) { left.value = 0 }
 
   if (elementY.value > 300) { top.value = 200 }
   if (elementY.value < 100) { top.value = 0 }
 
-  // 控制大图的显示
+// 4. 计算大图背景移动距离
+  // 原理：放大图是原图的2倍大小。
+  // 当遮罩层向右移动 10px，放大图的背景就需要向左移动 20px，才能展示对应的局部。
   positionX.value = -left.value * 2
   positionY.value = -top.value * 2
 
@@ -64,12 +73,14 @@ watch([elementX, elementY, isOutside], () => {
 
     <!-- 左侧大图-->
     <div class="middle" ref="target">
+      <!-- ✅ 使用 props 传递的图片 -->
       <img :src="imageList[activeIndex]" alt="" />
-      <!-- 蒙层小滑块 -->
+      <!-- 蒙层小滑块   .layer (遮罩层)：这是一个半透明的小方块，只有鼠标移入时显示 (v-show="!isOutside")。它的位置由上面计算出的 left 和 top 动态控制。 -->
       <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
+      <!-- ✅ 遍历 props 传递的图片列表 -->
       <li v-for="(img, i) in imageList" :key="i" @mouseenter="enterhandler(i)" :class="{ active: i === activeIndex }">
         <img :src="img" alt="" />
       </li>
@@ -77,7 +88,8 @@ watch([elementX, elementY, isOutside], () => {
     <!-- 放大镜大图 -->
     <div class="large" :style="[
       {
-        backgroundImage: `url(${imageList[0]})`,
+        // ✅ 正确：显示当前选中的图片
+        backgroundImage: `url(${imageList[activeIndex]})`,
         backgroundPositionX: `${positionX}px`,
         backgroundPositionY: `${positionY}px`,
       },
