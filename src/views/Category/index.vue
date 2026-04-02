@@ -45,7 +45,7 @@ const { categoryData } = useCategory()
         <!-- 真实分类列表 -->
         <ul v-else>
           <li v-for="i in categoryData.children" :key="i.id">
-            <RouterLink :to="`/category/sub/${i.id}`">
+            <RouterLink :to="`/category/sub/${i.id}?parentId=${categoryData.id}`">
               <img v-img-lazy="i.picture" />
               <p>{{ i.name }}</p>
             </RouterLink>
@@ -159,6 +159,7 @@ const { categoryData } = useCategory()
     width: 1240px;
     height: 500px;
     margin: 0 auto;
+
     .skeleton-carousel {
       width: 100%;
       height: 100%;
@@ -224,6 +225,7 @@ const { categoryData } = useCategory()
     0% {
       background-position: 200% 0;
     }
+
     100% {
       background-position: -200% 0;
     }

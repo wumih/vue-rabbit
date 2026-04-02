@@ -6,7 +6,7 @@
 // 1. 导入依赖与组件
 import { getCategoryFilterAPI, getSubCategoryAPI } from '@/apis/category'  // 导入分类相关API
 import { onMounted, ref } from 'vue'  // Vue 3组合式API
-import { useRoute } from 'vue-router'  // 路由工具
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'  // 路由工具
 import GoodsItem from '../Home/components/GoodsItem.vue'  // 复用商品卡片组件
 
 // 2. 面包屑导航功能
@@ -15,8 +15,8 @@ const categoryData = ref({})  // 存储面包屑数据的响应式变量
 const route = useRoute()  // 获取路由实例
 
 // 请求面包屑导航数据的函数
-const getCategoryData = async () => {
-  const res = await getCategoryFilterAPI(route.params.id)  // 通过路由参数获取分类ID
+const getCategoryData = async (id = route.params.id) => {
+  const res = await getCategoryFilterAPI(id)  // 通过路由参数获取分类ID
   categoryData.value = res.result  // 保存返回结果
 }
 
@@ -28,7 +28,7 @@ const goodList = ref([])  // 存储商品列表数据
 
 // 请求参数配置
 const reqData = ref({
-  categoryId: route.params.id,  // 当前分类ID
+  categoryId: route.query.parentId || route.params.id,  // 使用父分类 ID
   page: 1,  // 当前页码
   pageSize: 20,  // 每页显示数量
   sortField: 'publishTime'  // 默认排序字段：发布时间
@@ -42,6 +42,21 @@ const getGoodList = async () => {
 }
 
 onMounted(() => getGoodList())  // 组件挂载时调用函数
+
+// ✅ 监听路由变化，切换子分类时重新获取数据
+onBeforeRouteUpdate((to) => {
+  console.log('路由更新了！', '新的子分类ID:', to.params.id, '新的父分类ID:', to.query.parentId)
+
+  // 更新面包屑数据（传入新的子分类ID）
+  getCategoryData(to.params.id)
+
+  // 更新请求参数
+  reqData.value.categoryId = to.query.parentId || to.params.id
+  reqData.value.page = 1  // 重置页码
+
+  // 重新获取商品列表
+  getGoodList()
+})
 
 // 4. 排序标签页功能
 // tab切换回调
@@ -58,14 +73,14 @@ const disabled = ref(false)  // 是否禁用无限滚动，默认不禁用
 // 加载更多数据的异步函数
 const load = async () => {
   console.log('加载更多数据咯')  // 打印日志，用于调试
-  
+
   // 获取下一页的数据
   reqData.value.page++  // 页码加1
   const res = await getSubCategoryAPI(reqData.value)  // 调用API获取下一页数据
-  
+
   // 将新获取的数据追加到现有商品列表中
   goodList.value = [...goodList.value, ...res.result.items]
-  
+
   // 如果返回的数据为空，表示没有更多数据了，禁用无限滚动
   if (res.result.items.length === 0) {
     disabled.value = true
@@ -84,7 +99,7 @@ const load = async () => {
         <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    
+
     <!-- 2. 商品列表主区域 -->
     <!-- 商品列表区域 -->
     <div class="sub-container">
@@ -94,7 +109,7 @@ const load = async () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane> <!-- 按销量排序 -->
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane> <!-- 按评论数量排序 -->
       </el-tabs>
-      
+
       <!-- 商品列表区域（带无限滚动） -->
       <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 使用GoodsItem组件渲染每个商品 -->
@@ -121,7 +136,8 @@ const load = async () => {
   /* 商品列表内容区域 */
   .body {
     display: flex;
-    flex-wrap: wrap; /* 商品项换行显示 */
+    flex-wrap: wrap;
+    /* 商品项换行显示 */
     padding: 0 10px;
   }
 
@@ -157,7 +173,8 @@ const load = async () => {
 
     /* 商品价格样式 */
     .price {
-      color: $priceColor; /* 使用全局价格颜色变量 */
+      color: $priceColor;
+      /* 使用全局价格颜色变量 */
       font-size: 20px;
     }
   }
