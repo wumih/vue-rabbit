@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/userStore'
 const httpInstance = axios.create({
-  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
+  baseURL: 'https://pcapi-xiaotuxian-front-devtest.itheima.net',
   timeout: 5000,
   // 在浏览器解析 JSON 之前，把所有超过 15 位的大数字 ID 转为字符串
   // 目的：解决 JavaScript 大整数精度丢失问题（如雪花算法生成的 19 位 ID 会被截断）
