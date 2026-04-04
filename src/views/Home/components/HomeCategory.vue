@@ -126,7 +126,7 @@ const categoryStore = useCategoryStore()
 
               // 鼠标悬停效果
               &:hover {
-                background: #e3f9f4;
+                background: #f5ebe0;
               }
 
               // 商品图片样式

@@ -56,15 +56,15 @@ const addCart = () => {
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <!-- 
+          <!--
                 错误原因：goods一开始{}  {}.categories -> undefined  -> undefined[1]
-                1. 可选链的语法?. 
+                1. 可选链的语法?.
                 2. v-if手动控制渲染时机 保证只有数据存在才渲染
             -->
-          <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{ goods.categories[1].name }}
+          <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1]?.id}` }">{{ goods.categories?.[1]?.name }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories[0].id}` }">{{
-            goods.categories[0].name
+          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0]?.id}` }">{{
+            goods.categories?.[0]?.name
           }}
           </el-breadcrumb-item>
           <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
@@ -96,7 +96,7 @@ const addCart = () => {
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{ goods.brand.name }}</p>
+                  <p>{{ goods.brand?.name }}</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>

@@ -11,9 +11,24 @@ export const useUserStore = defineStore('user', () => {
   const userInfo = ref({})
   // 2. 定义获取接口数据的action函数
   const getUserInfo = async ({ account, password }) => {
-    const res = await loginAPI({ account, password })
-    userInfo.value = res.result
-    // 合并购物车的操作
+    // 屏蔽真实的 API 登录请求
+    // const res = await loginAPI({ account, password })
+    // userInfo.value = res.result
+
+    // 替换为前端构造的伪造用户信息
+    userInfo.value = {
+      id: "10001",
+      account: account,
+      mobile: account || "18610848230",
+      token: "mock-token-for-local-testing",
+      avatar: "https://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-4644-ba33-4752695022e3.png",
+      nickname: "尊贵的优选商城会员"
+    }
+
+    // 注意：接下来的合并购物车等请求依赖真实后端的鉴权验证
+    // 如果带着上面的模拟假 Token 去请求，就会遭到 401（未授权）拦截而报错中断程序
+    // 因此在假登录模式中，必须同时将如下的真实后端请求给屏蔽注销掉：
+    /*
     await mergeCartAPI(cartStore.cartList.map(item => {
       return {
         skuId: item.skuId,
@@ -22,6 +37,7 @@ export const useUserStore = defineStore('user', () => {
       }
     }))
     cartStore.updateNewList()
+    */
   }
 
   // 退出时清除用户信息

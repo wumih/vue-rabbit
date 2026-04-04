@@ -6,7 +6,11 @@ import { useUserStore } from './userStore'
 import { insertCartAPI, findNewCartListAPI, delCartAPI } from '@/apis/cart'
 export const useCartStore = defineStore('cart', () => {
   const userStore = useUserStore()
-  const isLogin = computed(() => userStore.userInfo.token)
+  // 排除假 Token，防止用假 token 去调用真实的购物车接口导致 401 报错
+  const isLogin = computed(() => {
+    const token = userStore.userInfo.token
+    return token && token !== 'mock-token-for-local-testing'
+  })
   // 1. 定义state - cartList
   const cartList = ref([])
   // 获取最新购物车列表action

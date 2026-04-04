@@ -95,13 +95,13 @@ onMounted(() => getHotList())
   display: flex;
   justify-content: space-between;
   height: 426px;
-  
+
   .skeleton-goods-item {
     width: 306px;
     height: 406px;
     padding: 20px;
     box-sizing: border-box;
-    
+
     .skeleton-image {
       width: 100%;
       height: 306px;
@@ -110,7 +110,7 @@ onMounted(() => getHotList())
       animation: skeleton-loading 1.5s infinite;
       border-radius: 8px;
     }
-    
+
     .skeleton-name {
       width: 90%;
       height: 22px;
@@ -120,7 +120,7 @@ onMounted(() => getHotList())
       animation: skeleton-loading 1.5s infinite;
       border-radius: 4px;
     }
-    
+
     .skeleton-desc {
       width: 80%;
       height: 18px;
@@ -137,57 +137,67 @@ onMounted(() => getHotList())
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
 }
-  /* 骨架屏样式 */
-  .skeleton-goods-list {
-    display: flex;
-    justify-content: space-between;
+
+/* 骨架屏样式 */
+.skeleton-goods-list {
+  display: flex;
+  justify-content: space-between;
+  height: 406px;
+
+  .skeleton-goods-item {
+    width: 306px;
     height: 406px;
-    
-    .skeleton-goods-item {
-      width: 306px;
-      height: 406px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-      
-      .skeleton-image {
-        width: 266px;
-        height: 266px;
-        background: #f2f2f2;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        animation: skeleton-loading 1.5s infinite;
-      }
-      
-      .skeleton-name {
-        width: 90%;
-        height: 22px;
-        background: #f2f2f2;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        animation: skeleton-loading 1.5s infinite 0.2s;
-      }
-      
-      .skeleton-desc {
-        width: 80%;
-        height: 18px;
-        background: #f2f2f2;
-        border-radius: 4px;
-        animation: skeleton-loading 1.5s infinite 0.4s;
-      }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .skeleton-image {
+      width: 266px;
+      height: 266px;
+      background: #f2f2f2;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      animation: skeleton-loading 1.5s infinite;
+    }
+
+    .skeleton-name {
+      width: 90%;
+      height: 22px;
+      background: #f2f2f2;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      animation: skeleton-loading 1.5s infinite 0.2s;
+    }
+
+    .skeleton-desc {
+      width: 80%;
+      height: 18px;
+      background: #f2f2f2;
+      border-radius: 4px;
+      animation: skeleton-loading 1.5s infinite 0.4s;
     }
   }
-  
-  /* 骨架屏加载动画 */
-  @keyframes skeleton-loading {
-    0% { background: #f2f2f2; }
-    50% { background: #e6e6e6; }
-    100% { background: #f2f2f2; }
+}
+
+/* 骨架屏加载动画 */
+@keyframes skeleton-loading {
+  0% {
+    background: #f2f2f2;
   }
+
+  50% {
+    background: #e6e6e6;
+  }
+
+  100% {
+    background: #f2f2f2;
+  }
+}
 </style>

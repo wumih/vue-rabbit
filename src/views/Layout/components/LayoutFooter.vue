@@ -51,7 +51,7 @@
           </a>
           <a href="javascript:;">
             <i class="iconfont icon-footer03"></i>
-            <span>品质新鲜</span>
+            <span>品质优选</span>
           </a>
         </div>
         <!-- 版权信息 -->
@@ -65,7 +65,7 @@
             <a href="javascript:;">搜索推荐</a>
             <a href="javascript:;">友情链接</a>
           </p>
-          <p>CopyRight © 小兔鲜儿</p>
+          <p>CopyRight © 优选商城</p>
         </div>
       </div>
     </div>

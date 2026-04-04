@@ -25,7 +25,7 @@ onMounted(() => getNewList())
 
 <template>
   <!-- 使用HomePanel组件作为容器，传入标题和副标题 -->
-  <HomePanel title="新鲜好物" sub-title="新鲜出炉 品质靠谱">
+  <HomePanel title="臻选上新" sub-title="手工甄选 匠心品质">
     <!-- 骨架屏 -->
     <div v-if="newList.length === 0" class="skeleton-goods-list">
       <div class="skeleton-goods-item" v-for="i in 4" :key="i">
@@ -63,7 +63,7 @@ onMounted(() => getNewList())
   li {
     width: 306px; // 商品项宽度
     height: 406px; // 商品项高度
-    background: #f0f9f4; // 浅绿色背景
+    background: #f5efe6; // 浅绿色背景
     transition: all .5s; // 过渡动画效果
 
     // 鼠标悬停效果
@@ -100,14 +100,14 @@ onMounted(() => getNewList())
   display: flex;
   justify-content: space-between;
   height: 406px;
-  
+
   .skeleton-goods-item {
     width: 306px;
     height: 406px;
-    background: #f0f9f4;
+    background: #f5efe6;
     padding: 20px;
     box-sizing: border-box;
-    
+
     .skeleton-image {
       width: 100%;
       height: 306px;
@@ -116,7 +116,7 @@ onMounted(() => getNewList())
       animation: skeleton-loading 1.5s infinite;
       border-radius: 8px;
     }
-    
+
     .skeleton-name {
       width: 80%;
       height: 22px;
@@ -126,7 +126,7 @@ onMounted(() => getNewList())
       animation: skeleton-loading 1.5s infinite;
       border-radius: 4px;
     }
-    
+
     .skeleton-price {
       width: 60%;
       height: 22px;
@@ -143,58 +143,68 @@ onMounted(() => getNewList())
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
 }
-  /* 骨架屏样式 */
-  .skeleton-goods-list {
-    display: flex;
-    justify-content: space-between;
+
+/* 骨架屏样式 */
+.skeleton-goods-list {
+  display: flex;
+  justify-content: space-between;
+  height: 406px;
+
+  .skeleton-goods-item {
+    width: 306px;
     height: 406px;
-    
-    .skeleton-goods-item {
-      width: 306px;
-      height: 406px;
-      background: #f0f9f4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-      
-      .skeleton-image {
-        width: 266px;
-        height: 266px;
-        background: #f2f2f2;
-        border-radius: 4px;
-        margin-bottom: 20px;
-        animation: skeleton-loading 1.5s infinite;
-      }
-      
-      .skeleton-name {
-        width: 80%;
-        height: 22px;
-        background: #f2f2f2;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        animation: skeleton-loading 1.5s infinite 0.2s;
-      }
-      
-      .skeleton-price {
-        width: 60%;
-        height: 22px;
-        background: #f2f2f2;
-        border-radius: 4px;
-        animation: skeleton-loading 1.5s infinite 0.4s;
-      }
+    background: #f5efe6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .skeleton-image {
+      width: 266px;
+      height: 266px;
+      background: #f2f2f2;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      animation: skeleton-loading 1.5s infinite;
+    }
+
+    .skeleton-name {
+      width: 80%;
+      height: 22px;
+      background: #f2f2f2;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      animation: skeleton-loading 1.5s infinite 0.2s;
+    }
+
+    .skeleton-price {
+      width: 60%;
+      height: 22px;
+      background: #f2f2f2;
+      border-radius: 4px;
+      animation: skeleton-loading 1.5s infinite 0.4s;
     }
   }
-  
-  /* 骨架屏加载动画 */
-  @keyframes skeleton-loading {
-    0% { background: #f2f2f2; }
-    50% { background: #e6e6e6; }
-    100% { background: #f2f2f2; }
+}
+
+/* 骨架屏加载动画 */
+@keyframes skeleton-loading {
+  0% {
+    background: #f2f2f2;
   }
+
+  50% {
+    background: #e6e6e6;
+  }
+
+  100% {
+    background: #f2f2f2;
+  }
+}
 </style>

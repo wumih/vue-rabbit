@@ -77,7 +77,7 @@ const doLogin = () => {
     <header class="login-header">
       <div class="container m-top-20">
         <h1 class="logo">
-          <RouterLink to="/">小兔鲜</RouterLink>
+          <RouterLink to="/">优选商城</RouterLink>
         </h1>
         <RouterLink class="entry" to="/">
           进入网站首页
@@ -92,6 +92,11 @@ const doLogin = () => {
           <a href="javascript:;">账户登录</a>
         </nav>
         <div class="account-box">
+          <!-- 测试环境登录提示 -->
+          <div class="login-tip">
+            <p><strong>账号：</strong>随便填写（例如：18610848230 或任意手机号）</p>
+            <p><strong>密码：</strong>随便填写（密码仅受前端 6-14 位校验约束）</p>
+          </div>
           <div class="form">
             <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
               <el-form-item prop="account" label="账户">
@@ -123,7 +128,7 @@ const doLogin = () => {
           <a href="javascript:;">搜索推荐</a>
           <a href="javascript:;">友情链接</a>
         </p>
-        <p>CopyRight &copy; 小兔鲜儿</p>
+        <p>CopyRight &copy; 优选商城</p>
       </div>
     </footer>
   </div>
@@ -243,6 +248,18 @@ const doLogin = () => {
       i {
         font-size: 14px;
       }
+    }
+  }
+
+  .login-tip {
+    padding: 0 40px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: #e6a23c;
+    line-height: 1.6;
+
+    strong {
+      color: #b88230;
     }
   }
 
